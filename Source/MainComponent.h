@@ -43,7 +43,7 @@ private:
     int grainSize,flux;
     
     //I'm so serious I tried EVERYTHING and this was the only way
-    juce::Image backgroundGifFrames[181];
+    juce::Image backgroundGifFrames[182];
     juce::Image backgroundGifFrame0;
     juce::Image backgroundGifFrame1;
     juce::Image backgroundGifFrame2;
@@ -244,11 +244,9 @@ private:
     void playButtonClicked();
     void stopButtonClicked();
     void pauseButtonClicked();
-    void grainSizeSliderValueChanged(Slider* slider) override;
-    void fluxSliderValueChanged(Slider* slider) override;
     void transportStateChanged(TransportState newState);
     void changeListenerCallback (ChangeBroadcaster *source) override;
-    
+    void sliderValueChanged(Slider* slider) override;
     int currentOutputIndex;
     int nextOutputIndex;
     float envelope;

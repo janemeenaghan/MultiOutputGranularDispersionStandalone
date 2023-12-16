@@ -355,16 +355,12 @@ void MainComponent::transportStateChanged(TransportState newState)
         }
     }
 }
-void MainComponent::grainSizeSliderValueChanged(Slider* slider)
+void MainComponent::sliderValueChanged(Slider* slider)
 {
     if (slider == &grainSizeSlider)
     {
-        // Handle slider value change
         grainSize = static_cast<int>(grainSizeSlider.getValue());
     }
-}
-void MainComponent::fluxSliderValueChanged(Slider* slider)
-{
     if (slider == &fluxSlider)
     {
         flux = Random().nextInt(static_cast<int>(fluxSlider.getValue()));
@@ -385,43 +381,26 @@ void MainComponent::changeListenerCallback (ChangeBroadcaster *source)
         }
     }
 }
-
 void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
     bufferToFill.clearActiveBufferRegion();
-    
     // Get the number of output channels
     int numChannels = bufferToFill.buffer->getNumChannels();
-
     // Choose a random output channel index
     int randomOutputIndex = Random().nextInt(numChannels);
-
-    // Get the audio block for the selected output channel
-    int grainSize = static_cast<int>(grainSizeSlider.getValue());
-    
     AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + randomOutputIndex, 1, grainSize+flux);
-
     // Fill the selected output channel with audio data
     transportSource.getNextAudioBlock(AudioSourceChannelInfo(outputBuffer));
-
      //mute the other output channels
      for (int i = 0; i < numChannels; ++i)
      {
          if (i != randomOutputIndex)
              bufferToFill.buffer->clear(i, bufferToFill.startSample, bufferToFill.numSamples);
      }
-    
-    //transport.getNextAudioBlock(bufferToFill);
 }
-
 void MainComponent::releaseResources()
 {
-    // This will be called when the audio device stops, or when it is being
-    // restarted due to a setting change.
-
-    // For more details, see the help for AudioProcessor::releaseResources()
 }
-
 //==============================================================================
 void MainComponent::paint (Graphics& g)
 {
