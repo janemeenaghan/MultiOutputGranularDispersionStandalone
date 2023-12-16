@@ -65,13 +65,13 @@ private:
     void updateEnvelope(int numSamples);
     
     AudioFormatManager formatManager;
-    std::unique_ptr<AudioFormatReaderSource> playSource;
-    AudioTransportSource transport;
+    std::unique_ptr<AudioFormatReaderSource> readerSource;
+    AudioTransportSource transportSource;
     
-    TextButton openButton;
-    TextButton playButton;
-    TextButton stopButton;
-    TextButton pauseButton;
+    TextButton openB;
+    TextButton playB;
+    TextButton stopB;
+    TextButton pauseB;
     //==============================================================================
     // Your private member variables go here...
 

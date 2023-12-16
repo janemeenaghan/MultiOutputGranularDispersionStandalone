@@ -10,7 +10,7 @@
 
 
 //==============================================================================
-MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), state(Stopped), openButton("Open"), playButton("Play"), stopButton("Stop"), pauseButton("Pause"), audioBlockLengthSlider("Audio Block Length")
+MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), state(Stopped), openB("Open"), playB("Play"), stopB("Stop"), pauseB("Pause"), audioBlockLengthSlider("Audio Block Length")
 {
     otherDeviceManager.initialise(2, 2, nullptr, true);
     audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 2, 0, 2, true, true, true, true));
@@ -18,26 +18,26 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     
     setAudioChannels (2, 2);
     
-    openButton.onClick = [this] {  openButtonClicked(); };
-    addAndMakeVisible(&openButton);
+    openB.onClick = [this] {  openButtonClicked(); };
+    addAndMakeVisible(&openB);
     
-    playButton.onClick = [this] { playButtonClicked(); };
-    playButton.setColour(TextButton::buttonColourId, Colours::green);
-    playButton.setEnabled(true);
-    addAndMakeVisible(&playButton);
+    playB.onClick = [this] { playButtonClicked(); };
+    playB.setColour(TextButton::buttonColourId, Colours::green);
+    playB.setEnabled(true);
+    addAndMakeVisible(&playB);
     
-    stopButton.onClick = [this] { stopButtonClicked(); };
-    stopButton.setColour(TextButton::buttonColourId, Colours::red);
-    stopButton.setEnabled(false);
-    addAndMakeVisible(&stopButton);
+    stopB.onClick = [this] { stopButtonClicked(); };
+    stopB.setColour(TextButton::buttonColourId, Colours::red);
+    stopB.setEnabled(false);
+    addAndMakeVisible(&stopB);
     
-    pauseButton.onClick = [this] { pauseButtonClicked(); };
-    pauseButton.setColour(TextButton::buttonColourId, Colours::yellow);
-    pauseButton.setEnabled(false); // Initially disabled
-    addAndMakeVisible(&pauseButton);
+    pauseB.onClick = [this] { pauseButtonClicked(); };
+    pauseB.setColour(TextButton::buttonColourId, Colours::yellow);
+    pauseB.setEnabled(false); // Initially disabled
+    addAndMakeVisible(&pauseB);
     
     formatManager.registerBasicFormats();
-    transport.addChangeListener(this);
+    transportSource.addChangeListener(this);
     
     
     // Initialize the audio block length slider
@@ -60,34 +60,29 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    transport.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::openButtonClicked()
 {
-    //choose a file
-    FileChooser chooser ("Choose a Wav or AIFF File", File::getSpecialLocation(File::userDesktopDirectory), "*.wav; *.mp3");
+    //Prompt user for audio file - default desktop directory
+    FileChooser file ("Choose audio - wav or mp3 accepted", File::getSpecialLocation(File::userDesktopDirectory), "*.wav; *.mp3");
     
-    //if the user chooses a file
-    if (chooser.browseForFileToOpen())
+    //Load in selected audio file
+    if (file.browseForFileToOpen())
     {
-        File myFile;
-        
-        //what did the user choose?
-        myFile = chooser.getResult();
-        
-        //read the file
-        AudioFormatReader* reader = formatManager.createReaderFor(myFile);
+        File sourceAudio;
+        sourceAudio = file.getResult();
+        AudioFormatReader* reader = formatManager.createReaderFor(sourceAudio);
         
         if (reader != nullptr)
         {
-            //get the file ready to play
+            //prep
             std::unique_ptr<AudioFormatReaderSource> tempSource (new AudioFormatReaderSource (reader, true));
-        
-            transport.setSource(tempSource.get());
+            transportSource.setSource(tempSource.get());
             transportStateChanged(Stopped);
         
-            playSource.reset(tempSource.release());
+            readerSource.reset(tempSource.release());
         }
     }
 }
@@ -97,7 +92,7 @@ void MainComponent::playButtonClicked()
     if (state == Paused)
        {
            // Set the position to resume playback from the same location
-           transport.setPosition(lastPlayPosition);
+           transportSource.setPosition(lastPlayPosition);
        }
     transportStateChanged(Starting);
 }
@@ -112,7 +107,7 @@ void MainComponent::pauseButtonClicked()
     if (state == Playing)
         {
             //lastPlayPosition = playSource->getNextReadPosition();
-            lastPlayPosition = transport.getCurrentPosition();
+            lastPlayPosition = transportSource.getCurrentPosition();
             transportStateChanged(Paused);
         }
 }
@@ -125,35 +120,35 @@ void MainComponent::transportStateChanged(TransportState newState)
         
         switch (state) {
             case Stopped:
-                playButton.setEnabled(true);
-                pauseButton.setEnabled(false);
-                transport.setPosition(0.0);
+                playB.setEnabled(true);
+                pauseB.setEnabled(false);
+                transportSource.setPosition(0.0);
                 break;
                 
             case Playing:
-                playButton.setEnabled(true);
-                pauseButton.setEnabled(true);
-                stopButton.setEnabled(true);
+                playB.setEnabled(true);
+                pauseB.setEnabled(true);
+                stopB.setEnabled(true);
                 break;
                 
             case Starting:
-                stopButton.setEnabled(true);
-                pauseButton.setEnabled(true);
-                playButton.setEnabled(false);
-                transport.start();
+                stopB.setEnabled(true);
+                pauseB.setEnabled(true);
+                playB.setEnabled(false);
+                transportSource.start();
                 break;
                 
             case Stopping:
-                playButton.setEnabled(true);
-                pauseButton.setEnabled(false);
-                stopButton.setEnabled(false);
-                transport.stop();
+                playB.setEnabled(true);
+                pauseB.setEnabled(false);
+                stopB.setEnabled(false);
+                transportSource.stop();
                 break;
             case Paused:
-                playButton.setEnabled(true);
-                pauseButton.setEnabled(false);
-                stopButton.setEnabled(true);
-                transport.stop();
+                playB.setEnabled(true);
+                pauseB.setEnabled(false);
+                stopB.setEnabled(true);
+                transportSource.stop();
                 break;
         }
     }
@@ -171,9 +166,9 @@ void MainComponent::sliderValueChanged(Slider* slider)
 
 void MainComponent::changeListenerCallback (ChangeBroadcaster *source)
 {
-    if (source == &transport)
+    if (source == &transportSource)
     {
-        if (transport.isPlaying())
+        if (transportSource.isPlaying())
         {
             transportStateChanged(Playing);
         }
@@ -199,7 +194,7 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
     AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + randomOutputIndex, 1, audioBlockLength);
 
     // Fill the selected output channel with audio data
-    transport.getNextAudioBlock(AudioSourceChannelInfo(outputBuffer));
+    transportSource.getNextAudioBlock(AudioSourceChannelInfo(outputBuffer));
 
      //mute the other output channels
      for (int i = 0; i < numChannels; ++i)
@@ -230,10 +225,10 @@ void MainComponent::paint (Graphics& g)
 
 void MainComponent::resized()
 {
-    openButton.setBounds(10, 10, getWidth() - 20, 30);
-    playButton.setBounds(10, 50, getWidth() - 20, 30);
-    stopButton.setBounds(10, 90, getWidth() - 20, 30);
-    pauseButton.setBounds(10, 130, getWidth() - 20, 30);
+    openB.setBounds(10, 10, getWidth() - 20, 30);
+    playB.setBounds(10, 50, getWidth() - 20, 30);
+    stopB.setBounds(10, 90, getWidth() - 20, 30);
+    pauseB.setBounds(10, 130, getWidth() - 20, 30);
     audioSettings->setBounds(10, 400, getWidth() - 20, 100);
     audioBlockLengthSlider.setBounds(10, 280, getWidth() - 20, 30);
 }
