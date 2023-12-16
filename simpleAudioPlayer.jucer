@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="zoErEt" name="MultiOutputGranularDispersionStandalone" projectType="guiapp"
+              displaySplashScreen="1" jucerFormatVersion="1" defines="JUCE_MODAL_LOOPS_PERMITTED=1">
+  <MAINGROUP id="gVx3r7" name="MultiOutputGranularDispersionStandalone">
+    <GROUP id="{62371E40-0828-593F-B3A9-E1B152BB4BD8}" name="Resources">
+      <FILE id="CE3wlP" name="frame_000_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_000_delay-0.08s.gif"/>
+      <FILE id="JUzLPy" name="frame_001_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_001_delay-0.08s.gif"/>
+      <FILE id="oZ0Z84" name="frame_002_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_002_delay-0.08s.gif"/>
+      <FILE id="YcHWf4" name="frame_003_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_003_delay-0.08s.gif"/>
+      <FILE id="ATOl0v" name="frame_004_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_004_delay-0.08s.gif"/>
+      <FILE id="OYVy7W" name="frame_005_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_005_delay-0.08s.gif"/>
+      <FILE id="lkQqVY" name="frame_006_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_006_delay-0.08s.gif"/>
+      <FILE id="JYM0TN" name="frame_007_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_007_delay-0.08s.gif"/>
+      <FILE id="Z6GZc4" name="frame_008_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_008_delay-0.08s.gif"/>
+      <FILE id="l6wXvD" name="frame_009_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_009_delay-0.08s.gif"/>
+      <FILE id="zBZzJO" name="frame_010_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_010_delay-0.08s.gif"/>
+      <FILE id="DVJzGI" name="frame_011_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_011_delay-0.08s.gif"/>
+      <FILE id="gR80e8" name="frame_012_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_012_delay-0.08s.gif"/>
+      <FILE id="SydPh9" name="frame_013_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_013_delay-0.08s.gif"/>
+      <FILE id="dE4IJV" name="frame_014_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_014_delay-0.08s.gif"/>
+      <FILE id="SXDjqV" name="frame_015_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_015_delay-0.08s.gif"/>
+      <FILE id="INExmU" name="frame_016_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_016_delay-0.08s.gif"/>
+      <FILE id="DdDyhc" name="frame_017_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_017_delay-0.08s.gif"/>
+      <FILE id="P3vZSS" name="frame_018_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_018_delay-0.08s.gif"/>
+      <FILE id="wOB8Co" name="frame_019_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_019_delay-0.08s.gif"/>
+      <FILE id="rXY72I" name="frame_020_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_020_delay-0.08s.gif"/>
+      <FILE id="RAclfN" name="frame_021_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_021_delay-0.08s.gif"/>
+      <FILE id="GNsKFM" name="frame_022_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_022_delay-0.08s.gif"/>
+      <FILE id="vumk7J" name="frame_023_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_023_delay-0.08s.gif"/>
+      <FILE id="XN5T9W" name="frame_024_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_024_delay-0.08s.gif"/>
+      <FILE id="jHApJH" name="frame_025_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_025_delay-0.08s.gif"/>
+      <FILE id="yZAjAT" name="frame_026_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_026_delay-0.08s.gif"/>
+      <FILE id="siwyzp" name="frame_027_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_027_delay-0.08s.gif"/>
+      <FILE id="Rb9RlP" name="frame_028_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_028_delay-0.08s.gif"/>
+      <FILE id="VeCciX" name="frame_029_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_029_delay-0.08s.gif"/>
+      <FILE id="lJIbby" name="frame_030_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_030_delay-0.08s.gif"/>
+      <FILE id="eYUl5F" name="frame_031_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_031_delay-0.08s.gif"/>
+      <FILE id="cxgvuG" name="frame_032_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_032_delay-0.08s.gif"/>
+      <FILE id="i36i1t" name="frame_033_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_033_delay-0.08s.gif"/>
+      <FILE id="Kh0NNn" name="frame_034_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_034_delay-0.08s.gif"/>
+      <FILE id="JH3e3a" name="frame_035_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_035_delay-0.08s.gif"/>
+      <FILE id="SRipmc" name="frame_036_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_036_delay-0.08s.gif"/>
+      <FILE id="KOFwYx" name="frame_037_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_037_delay-0.08s.gif"/>
+      <FILE id="xT4iNZ" name="frame_038_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_038_delay-0.08s.gif"/>
+      <FILE id="EOKd3E" name="frame_039_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_039_delay-0.08s.gif"/>
+      <FILE id="aQOIfQ" name="frame_040_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_040_delay-0.08s.gif"/>
+      <FILE id="X2nA38" name="frame_041_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_041_delay-0.08s.gif"/>
+      <FILE id="OvUv1t" name="frame_042_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_042_delay-0.08s.gif"/>
+      <FILE id="aFRWrp" name="frame_043_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_043_delay-0.08s.gif"/>
+      <FILE id="ilPRqy" name="frame_044_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_044_delay-0.08s.gif"/>
+      <FILE id="dcH0QM" name="frame_045_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_045_delay-0.08s.gif"/>
+      <FILE id="xILadI" name="frame_046_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_046_delay-0.08s.gif"/>
+      <FILE id="caB86Y" name="frame_047_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_047_delay-0.08s.gif"/>
+      <FILE id="IJRrOk" name="frame_048_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_048_delay-0.08s.gif"/>
+      <FILE id="TFiGnb" name="frame_049_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_049_delay-0.08s.gif"/>
+      <FILE id="CchjAG" name="frame_050_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_050_delay-0.08s.gif"/>
+      <FILE id="uioiMn" name="frame_051_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_051_delay-0.08s.gif"/>
+      <FILE id="mB0esI" name="frame_052_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_052_delay-0.08s.gif"/>
+      <FILE id="H7W6US" name="frame_053_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_053_delay-0.08s.gif"/>
+      <FILE id="UCyi6z" name="frame_054_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_054_delay-0.08s.gif"/>
+      <FILE id="Gc0emB" name="frame_055_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_055_delay-0.08s.gif"/>
+      <FILE id="yuppF0" name="frame_056_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_056_delay-0.08s.gif"/>
+      <FILE id="W0MAl8" name="frame_057_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_057_delay-0.08s.gif"/>
+      <FILE id="XAcQh0" name="frame_058_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_058_delay-0.08s.gif"/>
+      <FILE id="SXXnN4" name="frame_059_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_059_delay-0.08s.gif"/>
+      <FILE id="cKSfqW" name="frame_060_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_060_delay-0.08s.gif"/>
+      <FILE id="X81Z9D" name="frame_061_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_061_delay-0.08s.gif"/>
+      <FILE id="zRWgfq" name="frame_062_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_062_delay-0.08s.gif"/>
+      <FILE id="b0C6Xu" name="frame_063_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_063_delay-0.08s.gif"/>
+      <FILE id="tT0X6n" name="frame_064_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_064_delay-0.08s.gif"/>
+      <FILE id="l6gtpW" name="frame_065_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_065_delay-0.08s.gif"/>
+      <FILE id="rwyClT" name="frame_066_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_066_delay-0.08s.gif"/>
+      <FILE id="qiCI6a" name="frame_067_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_067_delay-0.08s.gif"/>
+      <FILE id="F6XbzW" name="frame_068_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_068_delay-0.08s.gif"/>
+      <FILE id="KMagDb" name="frame_069_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_069_delay-0.08s.gif"/>
+      <FILE id="l8B5Ap" name="frame_070_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_070_delay-0.08s.gif"/>
+      <FILE id="DAvN3r" name="frame_071_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_071_delay-0.08s.gif"/>
+      <FILE id="mPKqzr" name="frame_072_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_072_delay-0.08s.gif"/>
+      <FILE id="al7eSj" name="frame_073_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_073_delay-0.08s.gif"/>
+      <FILE id="HZsfDy" name="frame_074_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_074_delay-0.08s.gif"/>
+      <FILE id="HfkYZk" name="frame_075_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_075_delay-0.08s.gif"/>
+      <FILE id="VkxGiQ" name="frame_076_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_076_delay-0.08s.gif"/>
+      <FILE id="clLNjY" name="frame_077_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_077_delay-0.08s.gif"/>
+      <FILE id="OhTt7S" name="frame_078_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_078_delay-0.08s.gif"/>
+      <FILE id="lStUnH" name="frame_079_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_079_delay-0.08s.gif"/>
+      <FILE id="u3dWY4" name="frame_080_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_080_delay-0.08s.gif"/>
+      <FILE id="GP14O1" name="frame_081_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_081_delay-0.08s.gif"/>
+      <FILE id="DrJ96L" name="frame_082_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_082_delay-0.08s.gif"/>
+      <FILE id="AJ5xRz" name="frame_083_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_083_delay-0.08s.gif"/>
+      <FILE id="rDtSN6" name="frame_084_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_084_delay-0.08s.gif"/>
+      <FILE id="fI98YU" name="frame_085_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_085_delay-0.08s.gif"/>
+      <FILE id="k18LUM" name="frame_086_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_086_delay-0.08s.gif"/>
+      <FILE id="lhUec3" name="frame_087_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_087_delay-0.08s.gif"/>
+      <FILE id="ero6ai" name="frame_088_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_088_delay-0.08s.gif"/>
+      <FILE id="bt3vfZ" name="frame_089_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_089_delay-0.08s.gif"/>
+      <FILE id="buju1B" name="frame_090_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_090_delay-0.08s.gif"/>
+      <FILE id="hDkQ9h" name="frame_091_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_091_delay-0.08s.gif"/>
+      <FILE id="djdfmn" name="frame_092_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_092_delay-0.08s.gif"/>
+      <FILE id="liYsds" name="frame_093_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_093_delay-0.08s.gif"/>
+      <FILE id="QaJG8n" name="frame_094_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_094_delay-0.08s.gif"/>
+      <FILE id="Y2WFCd" name="frame_095_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_095_delay-0.08s.gif"/>
+      <FILE id="lBBQ2K" name="frame_096_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_096_delay-0.08s.gif"/>
+      <FILE id="o5bDRi" name="frame_097_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_097_delay-0.08s.gif"/>
+      <FILE id="Z8dPSK" name="frame_098_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_098_delay-0.08s.gif"/>
+      <FILE id="yo6eUn" name="frame_099_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_099_delay-0.08s.gif"/>
+      <FILE id="N1Qgm4" name="frame_0100_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0100_delay-0.08s.gif"/>
+      <FILE id="iG9vfn" name="frame_0101_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0101_delay-0.08s.gif"/>
+      <FILE id="jUhEyN" name="frame_0102_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0102_delay-0.08s.gif"/>
+      <FILE id="jaOscK" name="frame_0103_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0103_delay-0.08s.gif"/>
+      <FILE id="sFqHyD" name="frame_0104_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0104_delay-0.08s.gif"/>
+      <FILE id="uFLNoG" name="frame_0105_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0105_delay-0.08s.gif"/>
+      <FILE id="MkEIkt" name="frame_0106_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0106_delay-0.08s.gif"/>
+      <FILE id="iX5Y2O" name="frame_0107_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0107_delay-0.08s.gif"/>
+      <FILE id="q43ZzR" name="frame_0108_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0108_delay-0.08s.gif"/>
+      <FILE id="MjEw4A" name="frame_0109_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0109_delay-0.08s.gif"/>
+      <FILE id="UgyQDA" name="frame_0110_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0110_delay-0.08s.gif"/>
+      <FILE id="XEf3Rt" name="frame_0111_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0111_delay-0.08s.gif"/>
+      <FILE id="Lv1srz" name="frame_0112_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0112_delay-0.08s.gif"/>
+      <FILE id="gtEjwG" name="frame_0113_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0113_delay-0.08s.gif"/>
+      <FILE id="HpLFRf" name="frame_0114_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0114_delay-0.08s.gif"/>
+      <FILE id="LwE8Qq" name="frame_0115_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0115_delay-0.08s.gif"/>
+      <FILE id="RulaRX" name="frame_0116_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0116_delay-0.08s.gif"/>
+      <FILE id="MlVNlw" name="frame_0117_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0117_delay-0.08s.gif"/>
+      <FILE id="a3n6oU" name="frame_0118_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0118_delay-0.08s.gif"/>
+      <FILE id="YTSA7X" name="frame_0119_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0119_delay-0.08s.gif"/>
+      <FILE id="GugWmR" name="frame_0120_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0120_delay-0.08s.gif"/>
+      <FILE id="Nnflyd" name="frame_0121_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0121_delay-0.08s.gif"/>
+      <FILE id="C8QHJe" name="frame_0122_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0122_delay-0.08s.gif"/>
+      <FILE id="FuswEd" name="frame_0123_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0123_delay-0.08s.gif"/>
+      <FILE id="tx6ibT" name="frame_0124_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0124_delay-0.08s.gif"/>
+      <FILE id="nshaNd" name="frame_0125_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0125_delay-0.08s.gif"/>
+      <FILE id="mX6eYu" name="frame_0126_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0126_delay-0.08s.gif"/>
+      <FILE id="drvWVh" name="frame_0127_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0127_delay-0.08s.gif"/>
+      <FILE id="sdygUk" name="frame_0128_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0128_delay-0.08s.gif"/>
+      <FILE id="yFTZgl" name="frame_0129_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0129_delay-0.08s.gif"/>
+      <FILE id="Qa6QzY" name="frame_0130_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0130_delay-0.08s.gif"/>
+      <FILE id="gBvF1X" name="frame_0131_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0131_delay-0.08s.gif"/>
+      <FILE id="AOxFbf" name="frame_0132_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0132_delay-0.08s.gif"/>
+      <FILE id="L2WYJP" name="frame_0133_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0133_delay-0.08s.gif"/>
+      <FILE id="UW5Zf6" name="frame_0134_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0134_delay-0.08s.gif"/>
+      <FILE id="KnnTIT" name="frame_0135_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0135_delay-0.08s.gif"/>
+      <FILE id="zV4Xjb" name="frame_0136_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0136_delay-0.08s.gif"/>
+      <FILE id="Pm6ZaC" name="frame_0137_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0137_delay-0.08s.gif"/>
+      <FILE id="HfSuRF" name="frame_0138_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0138_delay-0.08s.gif"/>
+      <FILE id="unm9E8" name="frame_0139_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0139_delay-0.08s.gif"/>
+      <FILE id="eF5n9V" name="frame_0140_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0140_delay-0.08s.gif"/>
+      <FILE id="KW3jkT" name="frame_0141_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0141_delay-0.08s.gif"/>
+      <FILE id="lQug5i" name="frame_0142_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0142_delay-0.08s.gif"/>
+      <FILE id="Dp9ylD" name="frame_0143_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0143_delay-0.08s.gif"/>
+      <FILE id="ZOSaQt" name="frame_0144_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0144_delay-0.08s.gif"/>
+      <FILE id="K5MxE8" name="frame_0145_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0145_delay-0.08s.gif"/>
+      <FILE id="YY6QJ8" name="frame_0146_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0146_delay-0.08s.gif"/>
+      <FILE id="G1tGJh" name="frame_0147_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0147_delay-0.08s.gif"/>
+      <FILE id="v4Hv8c" name="frame_0148_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0148_delay-0.08s.gif"/>
+      <FILE id="EgiNdK" name="frame_0149_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0149_delay-0.08s.gif"/>
+      <FILE id="w7r0rS" name="frame_0150_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0150_delay-0.08s.gif"/>
+      <FILE id="V6YP9C" name="frame_0151_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0151_delay-0.08s.gif"/>
+      <FILE id="jwcsQj" name="frame_0152_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0152_delay-0.08s.gif"/>
+      <FILE id="LQMraE" name="frame_0153_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0153_delay-0.08s.gif"/>
+      <FILE id="Opzz3c" name="frame_0154_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0154_delay-0.08s.gif"/>
+      <FILE id="SLwzAp" name="frame_0155_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0155_delay-0.08s.gif"/>
+      <FILE id="vY7gGK" name="frame_0156_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0156_delay-0.08s.gif"/>
+      <FILE id="gQbIpL" name="frame_0157_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0157_delay-0.08s.gif"/>
+      <FILE id="NEiV8O" name="frame_0158_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0158_delay-0.08s.gif"/>
+      <FILE id="m3WmYc" name="frame_0159_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0159_delay-0.08s.gif"/>
+      <FILE id="aIo9K1" name="frame_0160_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0160_delay-0.08s.gif"/>
+      <FILE id="cW336v" name="frame_0161_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0161_delay-0.08s.gif"/>
+      <FILE id="MAd24s" name="frame_0162_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0162_delay-0.08s.gif"/>
+      <FILE id="WJM5LM" name="frame_0163_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0163_delay-0.08s.gif"/>
+      <FILE id="adwgT8" name="frame_0164_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0164_delay-0.08s.gif"/>
+      <FILE id="R8K7fs" name="frame_0165_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0165_delay-0.08s.gif"/>
+      <FILE id="tKCCI2" name="frame_0166_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0166_delay-0.08s.gif"/>
+      <FILE id="YHD1xA" name="frame_0167_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0167_delay-0.08s.gif"/>
+      <FILE id="HeD6Rp" name="frame_0168_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0168_delay-0.08s.gif"/>
+      <FILE id="ca0jWt" name="frame_0169_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0169_delay-0.08s.gif"/>
+      <FILE id="yMX52l" name="frame_0170_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0170_delay-0.08s.gif"/>
+      <FILE id="aT6qRq" name="frame_0171_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0171_delay-0.08s.gif"/>
+      <FILE id="DGqL3P" name="frame_0172_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0172_delay-0.08s.gif"/>
+      <FILE id="m8MZXQ" name="frame_0173_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0173_delay-0.08s.gif"/>
+      <FILE id="vP0Nqn" name="frame_0174_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0174_delay-0.08s.gif"/>
+      <FILE id="wuixYN" name="frame_0175_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0175_delay-0.08s.gif"/>
+      <FILE id="u8kNkl" name="frame_0176_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0176_delay-0.08s.gif"/>
+      <FILE id="ZEH80v" name="frame_0177_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0177_delay-0.08s.gif"/>
+      <FILE id="Yhw4co" name="frame_0178_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0178_delay-0.08s.gif"/>
+      <FILE id="rMPq40" name="frame_0179_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0179_delay-0.08s.gif"/>
+      <FILE id="N7QFTB" name="frame_0180_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0180_delay-0.08s.gif"/>
+      <FILE id="d3uyb3" name="frame_0181_delay-0.08s.gif" compile="0" resource="1"
+            file="../../../Downloads/ezgif-1-4d144986b7-gif-im/frame_0181_delay-0.08s.gif"/>
+      <FILE id="LiVLh1" name="backgroundGif.gif" compile="0" resource="1"
+            file="../backgroundGif.gif"/>
+      <FILE id="CHuUe3" name="backgroundMov.mov" compile="0" resource="1"
+            file="../backgroundMov.mov"/>
+      <FILE id="neAesT" name="background2.png" compile="0" resource="1" file="../../background2.png"/>
+    </GROUP>
+    <GROUP id="{E2A6EBF0-342D-5A41-5563-94F6064CB34B}" name="Source">
+      <FILE id="JDo7zm" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="xR97Wr" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="RFxZRb" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../../Applications/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+  </MODULES>
+  <LIVE_SETTINGS>
+    <OSX/>
+  </LIVE_SETTINGS>
+  <JUCEOPTIONS JUCE_USE_MP3AUDIOFORMAT="1"/>
+</JUCERPROJECT>
