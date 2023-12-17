@@ -17,7 +17,7 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
         audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 2, 0, 2, true, true, true, true));
         addAndMakeVisible(audioSettings.get());
      globalGrainSize = 30;
-     globalFlux = 0;
+     globalFlux = 10;
      globalCurrentGrainCounter = 30;
      globalOutputChannel = 0;
     //I'm so serious I tried EVERYTHING and this was the only way
@@ -102,6 +102,10 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 {
     DBG("Samples Per Block Expected: " << samplesPerBlockExpected);
     transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    globalSampleRate = static_cast<int>(sampleRate);
+    DBG("globalSampleRate set to: " << globalSampleRate);
+    globalNumSamples = samplesPerBlockExpected;
+    DBG("globalNumSamples set to: " << globalNumSamples);
 }
 
 void MainComponent::openButtonClicked()
@@ -230,6 +234,9 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
     //randomOutputIndex = 1;
     
     //if -> grain finished - time to set a new grain
+    
+    bool lastAudioBlockInGrain = (globalCurrentGrainCounter == 1);
+    bool firstAudioBlockInGrain = false;
     if (globalCurrentGrainCounter == 0){
         int fluxVal;
         if (globalFlux > 0){
@@ -241,20 +248,75 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
         int newIndividualGrainSize = globalGrainSize + fluxVal;
         globalCurrentGrainCounter = newIndividualGrainSize;
         globalOutputChannel = randomGenerator.nextInt(numChannels);
+        //apply envelope to new grain
+        firstAudioBlockInGrain = true;
+        //updateEnvelope();
     }
     else{
         globalCurrentGrainCounter--;
     }
-    AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + globalOutputChannel, 1, 512);
+    
+    DBG("bufferToFill.numSamples: " << bufferToFill.numSamples);
+    DBG("vs globalNumSamples: " << globalNumSamples);
+    
+    
+    AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + globalOutputChannel, 1, globalNumSamples);
     // Fill the selected output channel with audio data
     transportSource.getNextAudioBlock(AudioSourceChannelInfo(outputBuffer));
+    
+    //apply release envelope if end
+    
+    //built in attack and release over 1 audio block to prevent clipping
+    if (lastAudioBlockInGrain){
+        outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 1, 0);
+    }
+    if (firstAudioBlockInGrain){
+        outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 0, 1);
+    }
+    
      //mute the other output channels
      for (int i = 0; i < numChannels; ++i)
      {
          if (i != globalOutputChannel)
              bufferToFill.buffer->clear(i, bufferToFill.startSample, bufferToFill.numSamples);
      }
+}/*
+void MainComponent::applyAttackEnvelope()
+{
+    float attackTime = 0.1f;  // Adjust this as needed
+    int attackSamples = static_cast<int>(attackTime * globalSampleRate);
+    DBG("attackSamples set to: " << attackSamples);
+    
 }
+    
+    
+}
+void MainComponent::updateEnvelope()
+{
+    // Simple linear envelope
+    float attackTime = 0.1f;  // Adjust this as needed
+    float releaseTime = 0.1f; // Adjust this as needed
+    int attackSamples = static_cast<int>(attackTime * globalSampleRate);
+    int releaseSamples = static_cast<int>(releaseTime * globalSampleRate);
+    DBG("attackSamples set to: " << attackSamples);
+    DBG("releaseSamples set to: " << releaseSamples);
+    for (int i = 0; i < globalNumSamples; ++i)
+    {
+        if (i < attackSamples)
+        {
+            envelope = static_cast<float>(i) / static_cast<float>(attackSamples);
+        }
+        else if (i >= globalNumSamples - releaseSamples)
+        {
+            envelope = static_cast<float>(globalNumSamples - i) / static_cast<float>(releaseSamples);
+        }
+        else
+        {
+            envelope = 1.0f;
+        }
+    }
+}*/
+
 void MainComponent::releaseResources()
 {
 }

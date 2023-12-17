@@ -81,24 +81,15 @@ private:
     void transportStateChanged(TransportState newState);
     void changeListenerCallback (ChangeBroadcaster *source) override;
     //void sliderValueChanged(Slider* slider) override;
-    int currentOutputIndex;
-    int nextOutputIndex;
-    int globalGrainSize;
-    int globalFlux;
-    int globalCurrentGrainCounter;
-    int globalOutputChannel;
-    float envelope;
     // Function to update envelope during transitions
-    void updateEnvelope(int numSamples);
+    void updateEnvelope();
+    int currentOutputIndex, nextOutputIndex, globalGrainSize, globalFlux, globalCurrentGrainCounter, globalOutputChannel, globalSampleRate, globalNumSamples, globalAttackTime, globalReleaseTime;
+    float envelope;
     Random randomGenerator;
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
     AudioTransportSource transportSource;
-    
-    TextButton openB;
-    TextButton playB;
-    TextButton stopB;
-    TextButton pauseB;
+    TextButton openB,playB,stopB,pauseB;
     //==============================================================================
     // Your private member variables go here...
 
