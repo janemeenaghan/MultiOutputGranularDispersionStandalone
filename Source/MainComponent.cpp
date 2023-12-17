@@ -2,6 +2,60 @@
 MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), state(Stopped), openB("Open"), playB("Play"), stopB("Stop"), pauseB("Pause")/*, grainSizeSlider("Grain Size"), fluxSlider("Flux")*/
 {
     
+    //Sliders & their labels prep
+    mAttackSlider.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
+    mGrainSizeSlider.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
+    mFluxSlider.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
+    mSpreadSlider.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
+    mAttackSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 80, 30);
+    mGrainSizeSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 80, 30);
+    mFluxSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 80, 30);
+    mSpreadSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 80, 30);
+    mAttackSlider.setRange (0.01,10);
+    mGrainSizeSlider.setRange (1,1000);
+    mFluxSlider.setRange (0,1000);
+    mSpreadSlider.setRange (0,100);
+    mAttackSlider.setValue(.1);
+    mGrainSizeSlider.setValue(5);
+    mFluxSlider.setValue(0);
+    mSpreadSlider.setValue (50);
+    mAttackSlider.setNumDecimalPlacesToDisplay(2);
+    mGrainSizeSlider.setNumDecimalPlacesToDisplay(0);
+    mFluxSlider.setNumDecimalPlacesToDisplay(0);
+    mSpreadSlider.setNumDecimalPlacesToDisplay(0);
+    mAttackSlider.setColour(Slider::ColourIds::thumbColourId,Colours::red);
+    mGrainSizeSlider.setColour(Slider::ColourIds::thumbColourId,Colours::red);
+    mFluxSlider.setColour(Slider::ColourIds::thumbColourId,Colours::red);
+    mSpreadSlider.setColour(Slider::ColourIds::thumbColourId,Colours::red);
+    mAttackLabel.setText ("Attack (ms)",NotificationType::dontSendNotification);
+    mGrainSizeLabel.setText ("Grain size",NotificationType::dontSendNotification);
+    mFluxLabel.setText ("Flux",NotificationType::dontSendNotification);
+    mSpreadLabel.setText ("Spread (%)",NotificationType::dontSendNotification);
+    mAttackLabel.setFont(10.0f);
+    mAttackLabel.setJustificationType(Justification::centredTop);
+    mAttackLabel.attachToComponent(&mAttackSlider, false);
+    mGrainSizeLabel.setFont(10.0f);
+    mGrainSizeLabel.setJustificationType(Justification::centredTop);
+    mGrainSizeLabel.attachToComponent(&mGrainSizeSlider, false);
+    mFluxLabel.setFont(10.0f);
+    mFluxLabel.setJustificationType(Justification::centredTop);
+    mFluxLabel.attachToComponent(&mFluxSlider, false);
+    mSpreadLabel.setFont(10.0f);
+    mSpreadLabel.setJustificationType(Justification::centredTop);
+    mSpreadLabel.attachToComponent(&mSpreadSlider, false);
+    
+    addAndMakeVisible(mAttackSlider);
+    addAndMakeVisible(mGrainSizeSlider);
+    addAndMakeVisible(mFluxSlider);
+    addAndMakeVisible(mSpreadSlider);
+    addAndMakeVisible(mAttackLabel);
+    addAndMakeVisible(mGrainSizeLabel);
+    addAndMakeVisible(mFluxLabel);
+    addAndMakeVisible(mSpreadLabel);
+
+
+    
+    
     otherDeviceManager.initialise(2, 2, nullptr, true);
         audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 2, 0, 2, true, true, true, true));
         addAndMakeVisible(audioSettings.get());
@@ -76,7 +130,7 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     grainSize = 500;*/
 
 
-    setSize(1200, 512);
+    setSize(1500, 640);
 }
 
 
@@ -336,11 +390,22 @@ void MainComponent::timerCallback()
 
 void MainComponent::resized()
 {
-    openB.setBounds(20, 20, getWidth()/4, 40);
-    playB.setBounds(20, 70, getWidth()/4, 40);
-    stopB.setBounds(20, 120, getWidth()/4, 40);
-    pauseB.setBounds(20, 170, getWidth()/4, 40);
-    audioSettings->setBounds(20, 220, getWidth()/4, 200);
+    openB.setBounds(20, 20, getWidth()/3, 40);
+    playB.setBounds(20, 70, getWidth()/3, 40);
+    stopB.setBounds(20, 120, getWidth()/3, 40);
+    pauseB.setBounds(20, 170, getWidth()/3, 40);
+    audioSettings->setBounds(20, 220, getWidth()/3, 200);
+    mAttackSlider.setBounds(getWidth()/2, 220, getWidth()/10, getWidth()/10);
+    mGrainSizeSlider.setBounds(getWidth()/2 + getWidth()/10 + 20, 220, getWidth()/10, getWidth()/10);
+    mFluxSlider.setBounds(getWidth()/2 + (getWidth()/10+20) * 2, 220, getWidth()/10, getWidth()/10);
+    mSpreadSlider.setBounds(getWidth()/2  + (getWidth()/10+20) * 3 , 220, getWidth()/10, getWidth()/10);
+    
+    /*
+    mAttackLabel.setBounds(getWidth()/2 + getWidth()/20, 180, getWidth()/10, getWidth()/10);
+    mGrainSizeLabel.setBounds(getWidth()/2 + getWidth()/10 + 20 + getWidth()/20, 180, getWidth()/10, getWidth()/10);
+    mFluxLabel.setBounds(getWidth()/2 + (getWidth()/10+20) * 2 + getWidth()/20, 180, getWidth()/10, getWidth()/10);
+    mSpreadLabel.setBounds(getWidth()/2  + (getWidth()/10+20) * 3 + getWidth()/20 , 180, getWidth()/10, getWidth()/10);*/
+    
   //  grainSizeSlider.setBounds(20, 280, getWidth() - 80, 60);
    // fluxSlider.setBounds(40+(getWidth() - 80), 280, getWidth() - 80, 60);
 }

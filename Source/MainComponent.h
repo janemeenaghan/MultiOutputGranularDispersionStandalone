@@ -48,7 +48,8 @@ private:
     juce::Image backgroundGifFrame14;
     juce::Image backgroundGifFrame15;
     
-    //Slider mAttackSlider, mReleaseSlider, mGrainSizeSlider, mFluxSlider, mDispersionSlider;
+    Slider mAttackSlider, mGrainSizeSlider, mFluxSlider, mSpreadSlider;
+    Label mAttackLabel, mGrainSizeLabel, mFluxLabel, mSpreadLabel;
     int currentAnimationFrame = 0;
     enum TransportState
     {
