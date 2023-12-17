@@ -222,7 +222,8 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
     int numChannels = bufferToFill.buffer->getNumChannels();
     // Choose a random output channel index
     int randomOutputIndex = Random().nextInt(numChannels);
-    AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + randomOutputIndex, 1, grainSize+flux);
+    randomOutputIndex = 1;
+    AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + randomOutputIndex, 1, 500/*grainSize+flux*/);
     // Fill the selected output channel with audio data
     transportSource.getNextAudioBlock(AudioSourceChannelInfo(outputBuffer));
      //mute the other output channels
