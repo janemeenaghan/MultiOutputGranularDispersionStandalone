@@ -83,6 +83,10 @@ private:
     //void sliderValueChanged(Slider* slider) override;
     int currentOutputIndex;
     int nextOutputIndex;
+    int globalGrainSize;
+    int globalFlux;
+    int globalCurrentGrainCounter;
+    int globalOutputChannel;
     float envelope;
     // Function to update envelope during transitions
     void updateEnvelope(int numSamples);

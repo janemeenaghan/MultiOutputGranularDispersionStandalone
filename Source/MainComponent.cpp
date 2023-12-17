@@ -16,7 +16,10 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     otherDeviceManager.initialise(2, 2, nullptr, true);
         audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 2, 0, 2, true, true, true, true));
         addAndMakeVisible(audioSettings.get());
-    
+    int globalGrainSize = 30;
+    int globalFlux = 0;
+    int globalCurrentGrainCounter = 30;
+    int globalOutputChannel = 0;
     //I'm so serious I tried EVERYTHING and this was the only way
     backgroundGifFrames[16];
     backgroundGifFrames[0] = juce::ImageFileFormat::loadFrom(BinaryData::frame_000_delay0_08s_gif, BinaryData::frame_000_delay0_08s_gifSize);
@@ -97,6 +100,7 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
+    DBG("Samples Per Block Expected: " << samplesPerBlockExpected);
     transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
@@ -217,19 +221,30 @@ void MainComponent::changeListenerCallback (ChangeBroadcaster *source)
 }
 void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
+    
+    //what about cases where you have >2 outs but they're all above output 1 & 2 and you want to skip those?
     bufferToFill.clearActiveBufferRegion();
     // Get the number of output channels
     int numChannels = bufferToFill.buffer->getNumChannels();
     // Choose a random output channel index
-    int randomOutputIndex = Random().nextInt(numChannels);
-    randomOutputIndex = 1;
-    AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + randomOutputIndex, 1, 500/*grainSize+flux*/);
+    //randomOutputIndex = 1;
+    
+    //if -> grain finished - time to set a new grain
+    if (globalCurrentGrainCounter == 0){
+        int newIndividualGrainSize = globalGrainSize + Random().nextInt(globalFlux);
+        globalCurrentGrainCounter = newIndividualGrainSize;
+        globalOutputChannel = Random().nextInt(numChannels);
+    }
+    else{
+        globalCurrentGrainCounter--;
+    }
+    AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + globalOutputChannel, 1, 512);
     // Fill the selected output channel with audio data
     transportSource.getNextAudioBlock(AudioSourceChannelInfo(outputBuffer));
      //mute the other output channels
      for (int i = 0; i < numChannels; ++i)
      {
-         if (i != randomOutputIndex)
+         if (i != globalOutputChannel)
              bufferToFill.buffer->clear(i, bufferToFill.startSample, bufferToFill.numSamples);
      }
 }
