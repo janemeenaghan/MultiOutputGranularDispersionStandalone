@@ -90,7 +90,7 @@ private:
     float envelope;
     // Function to update envelope during transitions
     void updateEnvelope(int numSamples);
-    
+    Random randomGenerator;
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
     AudioTransportSource transportSource;
