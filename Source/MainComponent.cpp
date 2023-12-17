@@ -16,8 +16,8 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     otherDeviceManager.initialise(2, 2, nullptr, true);
         audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 2, 0, 2, true, true, true, true));
         addAndMakeVisible(audioSettings.get());
-     globalGrainSize = 30;
-     globalFlux = 10;
+     globalGrainSize = 2;
+     globalFlux = 100;
      globalCurrentGrainCounter = 30;
      globalOutputChannel = 0;
     //I'm so serious I tried EVERYTHING and this was the only way
