@@ -1,15 +1,4 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-  ==============================================================================
-*/
-
 #include "MainComponent.h"
-
-
-//==============================================================================
 MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), state(Stopped), openB("Open"), playB("Play"), stopB("Stop"), pauseB("Pause")/*, grainSizeSlider("Grain Size"), fluxSlider("Flux")*/
 {
     
@@ -347,11 +336,11 @@ void MainComponent::timerCallback()
 
 void MainComponent::resized()
 {
-    openB.setBounds(20, 20, getWidth() - 40, 60);
-    playB.setBounds(20, 100, getWidth() - 40, 60);
-    stopB.setBounds(20, 180, getWidth() - 40, 60);
-    pauseB.setBounds(20, 260, getWidth() - 40, 60);
-    audioSettings->setBounds(20, 320, getWidth() - 40, 200);
+    openB.setBounds(20, 20, getWidth()/4, 40);
+    playB.setBounds(20, 70, getWidth()/4, 40);
+    stopB.setBounds(20, 120, getWidth()/4, 40);
+    pauseB.setBounds(20, 170, getWidth()/4, 40);
+    audioSettings->setBounds(20, 220, getWidth()/4, 200);
   //  grainSizeSlider.setBounds(20, 280, getWidth() - 80, 60);
    // fluxSlider.setBounds(40+(getWidth() - 80), 280, getWidth() - 80, 60);
 }

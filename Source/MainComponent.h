@@ -1,20 +1,7 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-//==============================================================================
-/*
-    This component lives inside our window, and this is where you should put all
-    your controls and content.
-*/
 class MainComponent   : public AudioAppComponent,
                        // public Slider::Listener,
                         public ChangeListener,
@@ -61,6 +48,7 @@ private:
     juce::Image backgroundGifFrame14;
     juce::Image backgroundGifFrame15;
     
+    //Slider mAttackSlider, mReleaseSlider, mGrainSizeSlider, mFluxSlider, mDispersionSlider;
     int currentAnimationFrame = 0;
     enum TransportState
     {
@@ -83,7 +71,7 @@ private:
     //void sliderValueChanged(Slider* slider) override;
     // Function to update envelope during transitions
     void updateEnvelope();
-    int currentOutputIndex, nextOutputIndex, globalGrainSize, globalFlux, globalCurrentGrainCounter, globalOutputChannel, globalSampleRate, globalNumSamples, globalAttackTime, globalReleaseTime;
+    int currentOutputIndex, nextOutputIndex, globalGrainSize, globalFlux, globalCurrentGrainCounter, globalOutputChannel, globalSampleRate, globalNumSamples, globalReleaseTime;
     float envelope;
     Random randomGenerator;
     AudioFormatManager formatManager;
