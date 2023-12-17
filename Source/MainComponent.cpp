@@ -239,18 +239,7 @@ void MainComponent::transportStateChanged(TransportState newState)
                 break;
         }
     }
-}/*
-void MainComponent::sliderValueChanged(Slider* slider)
-{
-    if (slider == &grainSizeSlider)
-    {
-        grainSize = static_cast<int>(grainSizeSlider.getValue());
-    }
-    if (slider == &fluxSlider)
-    {
-        flux = Random().nextInt(static_cast<int>(fluxSlider.getValue()));
-    }
-}*/
+}
 
 void MainComponent::changeListenerCallback (ChangeBroadcaster *source)
 {
@@ -376,6 +365,24 @@ void MainComponent::paint (Graphics& g)
 
 
 }
+void MainComponent::sliderValueChanged(Slider* slider){
+    if (slider == &mAttackSlider){
+        
+    }
+    else if (slider == &mGrainSizeSlider){
+        
+    }
+    else if (slider == &mFluxSlider){
+        
+    }
+    else if (slider == &mSpreadSlider){
+        
+    }
+    else{
+        DBG("Invalid slider");
+    }
+}
+
 void MainComponent::timerCallback()
 {
     // Update the frame index for the next paint
