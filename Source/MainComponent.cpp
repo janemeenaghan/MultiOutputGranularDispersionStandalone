@@ -43,7 +43,10 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     mSpreadLabel.setFont(10.0f);
     mSpreadLabel.setJustificationType(Justification::centredTop);
     mSpreadLabel.attachToComponent(&mSpreadSlider, false);
-    
+    mAttackSlider.addListener(this);
+    mGrainSizeSlider.addListener(this);
+    mFluxSlider.addListener(this);
+    mSpreadSlider.addListener(this);
     addAndMakeVisible(mAttackSlider);
     addAndMakeVisible(mGrainSizeSlider);
     addAndMakeVisible(mFluxSlider);
@@ -59,10 +62,10 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     otherDeviceManager.initialise(2, 2, nullptr, true);
         audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 2, 0, 2, true, true, true, true));
         addAndMakeVisible(audioSettings.get());
-     globalGrainSize = 2;
-     globalFlux = 100;
-     globalCurrentGrainCounter = 30;
-     globalOutputChannel = 0;
+     grainSize = 2;
+     flux = 100;
+     currentGrainCounter = 30;
+     outputChannel = 0;
     //I'm so serious I tried EVERYTHING and this was the only way
     backgroundGifFrames[16];
     backgroundGifFrames[0] = juce::ImageFileFormat::loadFrom(BinaryData::frame_000_delay0_08s_gif, BinaryData::frame_000_delay0_08s_gifSize);
@@ -257,7 +260,11 @@ void MainComponent::changeListenerCallback (ChangeBroadcaster *source)
 }
 void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
-    ;
+    DBG("attack: " << attack);
+    DBG("grainSize: " << grainSize);
+    DBG("flux: " << flux);
+    DBG("spread: " << spread);
+    DBG("currentGrainCounter: " << currentGrainCounter);
     //what about cases where you have >2 outs but they're all above output 1 & 2 and you want to skip those?
     bufferToFill.clearActiveBufferRegion();
     // Get the number of output channels
@@ -267,49 +274,49 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
     
     //if -> grain finished - time to set a new grain
     
-    bool lastAudioBlockInGrain = (globalCurrentGrainCounter == 1);
-    bool firstAudioBlockInGrain = false;
-    if (globalCurrentGrainCounter == 0){
+    bool isLastAudioBlockInGrain = (currentGrainCounter == 1);
+    bool isFirstAudioBlockInGrain = false;
+    if (currentGrainCounter == 0){
         int fluxVal;
-        if (globalFlux > 0){
-            fluxVal = randomGenerator.nextInt(globalFlux);
+        if (flux > 0){
+            fluxVal = randomGenerator.nextInt(flux);
         }
         else{
             fluxVal = 0;
         }
-        int newIndividualGrainSize = globalGrainSize + fluxVal;
-        globalCurrentGrainCounter = newIndividualGrainSize;
-        globalOutputChannel = randomGenerator.nextInt(numChannels);
+        int newIndividualGrainSize = grainSize + fluxVal;
+        currentGrainCounter = newIndividualGrainSize;
+        outputChannel = randomGenerator.nextInt(numChannels);
         //apply envelope to new grain
-        firstAudioBlockInGrain = true;
+        isFirstAudioBlockInGrain = true;
         //updateEnvelope();
     }
     else{
-        globalCurrentGrainCounter--;
+        currentGrainCounter--;
     }
     
     DBG("bufferToFill.numSamples: " << bufferToFill.numSamples);
     DBG("vs globalNumSamples: " << globalNumSamples);
     
     
-    AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + globalOutputChannel, 1, globalNumSamples);
+    AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + outputChannel, 1, globalNumSamples);
     // Fill the selected output channel with audio data
     transportSource.getNextAudioBlock(AudioSourceChannelInfo(outputBuffer));
     
     //apply release envelope if end
     
     //built in attack and release over 1 audio block to prevent clipping
-    if (lastAudioBlockInGrain){
+    if (isLastAudioBlockInGrain){
         outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 1, 0);
     }
-    if (firstAudioBlockInGrain){
+    if (isFirstAudioBlockInGrain){
         outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 0, 1);
     }
     
      //mute the other output channels
      for (int i = 0; i < numChannels; ++i)
      {
-         if (i != globalOutputChannel)
+         if (i != outputChannel)
              bufferToFill.buffer->clear(i, bufferToFill.startSample, bufferToFill.numSamples);
      }
 }/*
@@ -367,16 +374,16 @@ void MainComponent::paint (Graphics& g)
 }
 void MainComponent::sliderValueChanged(Slider* slider){
     if (slider == &mAttackSlider){
-        
+        attack = (double) mAttackSlider.getValue();
     }
     else if (slider == &mGrainSizeSlider){
-        
+        grainSize = mGrainSizeSlider.getValue();
     }
     else if (slider == &mFluxSlider){
-        
+        flux = mFluxSlider.getValue();
     }
     else if (slider == &mSpreadSlider){
-        
+        spread = mSpreadSlider.getValue();
     }
     else{
         DBG("Invalid slider");

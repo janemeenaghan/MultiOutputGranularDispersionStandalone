@@ -30,7 +30,8 @@ private:
     std::unique_ptr <AudioDeviceSelectorComponent> audioSettings;
     int64 lastPlayPosition = 0;
     juce::Image gifImage;
-    int grainSize,flux,spread;
+    int currentOutputIndex, nextOutputIndex, grainSize, flux, spread, currentGrainCounter, outputChannel, globalSampleRate, globalNumSamples, globalReleaseTime;
+    float envelope;
     double attack;
     
     //I'm so serious I tried EVERYTHING and this was the only way
@@ -75,8 +76,6 @@ private:
     void changeListenerCallback (ChangeBroadcaster *source) override;
     // Function to update envelope during transitions
     void updateEnvelope();
-    int currentOutputIndex, nextOutputIndex, globalGrainSize, globalFlux, globalCurrentGrainCounter, globalOutputChannel, globalSampleRate, globalNumSamples, globalReleaseTime;
-    float envelope;
     Random randomGenerator;
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
