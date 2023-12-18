@@ -10,6 +10,7 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     mGrainSizeSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 80, 30);
     mFluxSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 80, 30);
     mSpreadSlider.setTextBoxStyle(Slider::TextBoxBelow, false, 80, 30);
+    shouldPaint = false;
     mAttackSlider.setRange (0.01,10);
     mGrainSizeSlider.setRange (1,1000);
     mFluxSlider.setRange (0,1000);
@@ -58,6 +59,7 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     addAndMakeVisible(mFluxLabel);
     addAndMakeVisible(mSpreadLabel);
     addAndMakeVisible(noticeAboutOutputs);
+    
     attackBlocks = 0;
     otherDeviceManager.initialise(8, 8, nullptr, true);
         audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 8, 0, 8, true, true, true, true));
@@ -68,7 +70,6 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     spread = 50;
     currentGrainCounter = grainSize;
     outputChannel = 0;
-
     //I'm so serious I tried EVERYTHING and this was the only way
     backgroundGifFrames[16];
     backgroundGifFrames[0] = juce::ImageFileFormat::loadFrom(BinaryData::frame_000_delay0_08s_gif, BinaryData::frame_000_delay0_08s_gifSize);
@@ -110,32 +111,12 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     
     pauseB.onClick = [this] { pauseButtonClicked(); };
     pauseB.setColour(TextButton::buttonColourId, Colours::red);
-    pauseB.setEnabled(false); // Initially disabled
+    pauseB.setEnabled(false);
     addAndMakeVisible(&pauseB);
-    
+
     formatManager.registerBasicFormats();
     transportSource.addChangeListener(this);
-    
-    
-    // Initialize the grain size slider
- /*   grainSizeSlider.setSliderStyle(Slider::LinearHorizontal);
-    grainSizeSlider.setRange(1, 500, 1);  // Adjust the range as needed
-    grainSizeSlider.setValue(256);  // Set an initial value
-    grainSizeSlider.addListener(this);
-    addAndMakeVisible(&grainSizeSlider);
-    */
-    
-    // Initialize the flux slider
-  /*  fluxSlider.setSliderStyle(Slider::LinearHorizontal);
-    fluxSlider.setRange(1, 500, 1);  // Adjust the range as needed
-    fluxSlider.setValue(0);  // Set an initial value
-    fluxSlider.addListener(this);
-    addAndMakeVisible(&fluxSlider);
-    
-    flux = 500;
-    grainSize = 500;*/
-
-
+    transportStateChanged(Stopped);
     setSize(1500, 640);
 }
 
@@ -170,12 +151,17 @@ void MainComponent::openButtonClicked()
         AudioFormatReader* formatReader = formatManager.createReaderFor(sourceAudio);
         if (formatReader != nullptr)
         {
+            transportStateChanged(Stopped);
             //prep
             std::unique_ptr<AudioFormatReaderSource> tempSource (new AudioFormatReaderSource (formatReader, true));
             transportSource.setSource(tempSource.get());
             transportStateChanged(Stopped);
-        
+            
             readerSource.reset(tempSource.release());
+            auto sampleLength = static_cast<int>(formatReader->lengthInSamples);
+            mWaveForm.setSize(1,sampleLength);
+            shouldPaint = true;
+            formatReader->read (&mWaveForm, 0, sampleLength ,0,true, false);
         }
     }
 }
@@ -183,27 +169,32 @@ void MainComponent::openButtonClicked()
 void MainComponent::playButtonClicked()
 {
     if (state == Paused)
-       {
-           // Set the position to resume playback from the same location
-           transportSource.setPosition(lastPlayPosition);
-       }
-    transportStateChanged(Starting);
+    {
+        lastPlayPosition = transportSource.getCurrentPosition();
+        transportSource.start();
+    }
+    if (state == Stopped){
+        lastPlayPosition = 0.0;
+        transportSource.start();
+    }
+    transportStateChanged(Playing);
 }
-
-void MainComponent::stopButtonClicked()
-{
-    transportStateChanged(Stopping);
-}
-
 void MainComponent::pauseButtonClicked()
 {
     if (state == Playing)
-        {
-            //lastPlayPosition = playSource->getNextReadPosition();
-            lastPlayPosition = transportSource.getCurrentPosition();
-            transportStateChanged(Paused);
-        }
+    {
+        transportStateChanged(Paused);
+    }
 }
+void MainComponent::stopButtonClicked()
+{
+    if (state == Playing || state == Paused)
+    {
+        transportStateChanged(Stopped);
+    }
+}
+
+
 
 void MainComponent::transportStateChanged(TransportState newState)
 {
@@ -212,67 +203,39 @@ void MainComponent::transportStateChanged(TransportState newState)
         state = newState;
         
         switch (state) {
-            case Stopped:
+            case Playing:
+                playB.setEnabled(false);
+                pauseB.setEnabled(true);
+                stopB.setEnabled(true);
+                break;
+            case Paused:
+                lastPlayPosition = transportSource.getCurrentPosition();
+                transportSource.stop();
                 playB.setEnabled(true);
                 pauseB.setEnabled(false);
-                transportSource.setPosition(0.0);
-                break;
-                
-            case Playing:
-                playB.setEnabled(true);
-                pauseB.setEnabled(true);
                 stopB.setEnabled(true);
                 break;
-                
-            case Starting:
-                stopB.setEnabled(true);
-                pauseB.setEnabled(true);
-                playB.setEnabled(false);
-                transportSource.start();
-                break;
-                
-            case Stopping:
+            case Stopped:
+                lastPlayPosition = 0.0;
+                transportSource.setPosition(lastPlayPosition);
+                transportSource.stop();
                 playB.setEnabled(true);
                 pauseB.setEnabled(false);
                 stopB.setEnabled(false);
-                transportSource.stop();
-                break;
-            case Paused:
-                playB.setEnabled(true);
-                pauseB.setEnabled(false);
-                stopB.setEnabled(true);
-                transportSource.stop();
                 break;
         }
     }
 }
-
+// IS THIS RIGHT
 void MainComponent::changeListenerCallback (ChangeBroadcaster *source)
 {
-    if (source == &transportSource)
-    {
-        if (transportSource.isPlaying())
-        {
-            transportStateChanged(Playing);
-        }
-        else
-        {
-            transportStateChanged(Stopped);
-        }
-    }
+    
 }
 void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
-   // DBG("attack: " << attack);
-   // DBG("grainSize: " << grainSize);
-   // DBG("flux: " << flux);
-   // DBG("spread: " << spread);
-   // DBG("currentGrainCounter: " << currentGrainCounter);
-    //what about cases where you have >2 outs but they're all above output 1 & 2 and you want to skip those?
     bufferToFill.clearActiveBufferRegion();
     // Get the number of output channels
     int numChannels = bufferToFill.buffer->getNumChannels();
-    
     //if -> grain finished - time to set a new grain
     bool isLastAudioBlockInGrain = (currentGrainCounter == 1);
     bool isFirstAudioBlockInGrain = false;
@@ -307,10 +270,10 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
             }
         }
         // Now, 'usedChannels' contains the indices of the channels that are used in the buffer
-        for (int channelIndex : usedChannels)
+        /*for (int channelIndex : usedChannels)
         {
             DBG("Channel " << channelIndex + 1 << " is used.");
-        }
+        }*/
         int currentChannel = outputChannel;
         // Calculate the probability distribution
         std::vector<float> probabilities;
@@ -345,30 +308,49 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
             }
         }
         outputChannel = nextChannel;
-        
-        DBG("new outputChannel: " << outputChannel);
-        //apply envelope to new grain
         isFirstAudioBlockInGrain = true;
-        //updateEnvelope();
     }
     else{
         currentGrainCounter--;
     }
     
-   // DBG("bufferToFill.numSamples: " << bufferToFill.numSamples);
-   // DBG("vs globalNumSamples: " << globalNumSamples);
-    
-    
+    // Initialize a buffer to hold the downmixed audio
     AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + outputChannel, 1, globalNumSamples);
+    float* downmixChannel = outputBuffer.getWritePointer(0);
+
+    // Sum the audio data from all channels into the downmix buffer
+    for (int channel = 0; channel < numChannels; ++channel)
+    {
+        const float* sourceChannel = bufferToFill.buffer->getReadPointer(channel);
+
+        for (int sample = 0; sample < globalNumSamples; ++sample)
+        {
+            downmixChannel[sample] += sourceChannel[sample];
+        }
+    }
+
+    // Find the maximum absolute value in the downmix buffer
+    float maxAbsValue = 0.0f;
+    for (int sample = 0; sample < globalNumSamples; ++sample)
+    {
+        maxAbsValue = jmax(maxAbsValue, std::abs(downmixChannel[sample]));
+    }
+    // Scale the downmix buffer to prevent clipping
+    if (maxAbsValue > 1.0f)
+    {
+        float scale = 1.0f / maxAbsValue;
+        for (int sample = 0; sample < globalNumSamples; ++sample)
+        {
+            downmixChannel[sample] *= scale;
+        }
+    }
     // Fill the selected output channel with audio data
     transportSource.getNextAudioBlock(AudioSourceChannelInfo(outputBuffer));
-    
-    //apply release envelope if end
-    
-    //built in attack and release over 1 audio block to prevent clipping
+    //built in release over 1 audio block to prevent clipping
     if (isLastAudioBlockInGrain){
         outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 1, 0);
     }
+    //attack envelope based on conversion of input attack in seconds into blocks
     else if (isFirstAudioBlockInGrain){
         attackBlockCounter = 0;
         //outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 0, 1);
@@ -383,7 +365,7 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
     }
     else if (attackRampGateOn){
         if (attackBlockCounter < attackBlocks){
-            outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), (double)(attackBlockCounter /attackBlocks), (double)(attackBlockCounter+1) / attackBlocks);
+            outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), (double)((double)attackBlockCounter /(double)attackBlocks), (double)((double)attackBlockCounter+1.0) / (double)attackBlocks);
             attackBlockCounter ++;
         }
         else{
@@ -442,15 +424,43 @@ void MainComponent::releaseResources()
 //==============================================================================
 void MainComponent::paint (Graphics& g)
 {
-    
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    //g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
     g.fillAll (Colours::black);
-   // Image background = ImageCache::getFromMemory (BinaryData::backgroundGif_gif, BinaryData::backgroundGif_gifSize);
-        g.drawImage (backgroundGifFrames[currentAnimationFrame], getLocalBounds().toFloat());
-   // g.drawImage(gifImage, getLocalBounds().toFloat(), currentAnimationFrame * gifImage.getWidth(), 0, gifImage.getWidth(), gifImage.getHeight());
-
-
+    
+    g.drawImage (backgroundGifFrames[currentAnimationFrame], getLocalBounds().toFloat());
+    
+    //handle draw waveform and playbackLine
+    if (shouldPaint){
+        //waveform
+        g.setColour(Colours::white);
+        Path p;
+        mAudioPoints.clear();
+        auto ratio = mWaveForm.getNumSamples() / (getWidth()/2.25);
+        auto buffer = mWaveForm.getReadPointer(0);
+        // x axis scaling
+        for (int sample = 0 ; sample < mWaveForm.getNumSamples(); sample+= ratio){
+            mAudioPoints.push_back (buffer[sample]);
+        }
+        p.startNewSubPath(getWidth()/2,getHeight()/4);
+        //y axis scaling
+        for (int sample = 0; sample < mAudioPoints.size(); ++sample){
+            
+            auto point = jmap <float>(mAudioPoints[sample], -1.0f, 1.0f, getHeight()/5,0);
+            p.lineTo(sample + getWidth()/2, (point+getHeight()/4) - getHeight()/10);
+        }
+        g.strokePath(p, PathStrokeType(2));
+        //playback line
+        g.setColour(Colours::red);
+        Path playbackLine;
+        double currentPosition = transportSource.getCurrentPosition();
+        double lengthInSeconds = transportSource.getLengthInSeconds();
+        // Calculate the playback percentage
+        double playbackPercentage = (currentPosition / lengthInSeconds);
+        double playbackLineX = getWidth()/2 + (playbackPercentage * getWidth()/2.25);
+        playbackLine.startNewSubPath(playbackLineX,getHeight()/4+getHeight()/5);
+        playbackLine.lineTo(playbackLineX,getHeight()/4-getHeight()/5);
+        g.strokePath(playbackLine, PathStrokeType(2));
+    }
+    
 }
 void MainComponent::sliderValueChanged(Slider* slider){
     if (slider == &mAttackSlider){
@@ -489,10 +499,10 @@ void MainComponent::resized()
     stopB.setBounds(20, 120, getWidth()/3, 40);
     pauseB.setBounds(20, 170, getWidth()/3, 40);
     audioSettings->setBounds(20, 220, getWidth()/3, 200);
-    mAttackSlider.setBounds(getWidth()/2, 220, getWidth()/10, getWidth()/10);
-    mGrainSizeSlider.setBounds(getWidth()/2 + getWidth()/10 + 20, 220, getWidth()/10, getWidth()/10);
-    mFluxSlider.setBounds(getWidth()/2 + (getWidth()/10+20) * 2, 220, getWidth()/10, getWidth()/10);
-    mSpreadSlider.setBounds(getWidth()/2  + (getWidth()/10+20) * 3 , 220, getWidth()/10, getWidth()/10);
+    mAttackSlider.setBounds(getWidth()/2, getHeight()/2 + getHeight()/10 + 10, getWidth()/10, getWidth()/10);
+    mGrainSizeSlider.setBounds(getWidth()/2 + getWidth()/10 + 20, getHeight()/2 + getHeight()/10 + 10, getWidth()/10, getWidth()/10);
+    mFluxSlider.setBounds(getWidth()/2 + (getWidth()/10+20) * 2, getHeight()/2 + getHeight()/10 + 10, getWidth()/10, getWidth()/10);
+    mSpreadSlider.setBounds(getWidth()/2  + (getWidth()/10+20) * 3 , getHeight()/2 + getHeight()/10 + 10, getWidth()/10, getWidth()/10);
     
     noticeAboutOutputs.setBounds(20, getHeight()-120, getWidth()/3, 100);
     /*

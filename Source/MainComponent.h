@@ -28,12 +28,14 @@ public:
 private:
     AudioDeviceManager otherDeviceManager;
     std::unique_ptr <AudioDeviceSelectorComponent> audioSettings;
+    AudioBuffer <float> mWaveForm;
+    std::vector<float> mAudioPoints;
     int64 lastPlayPosition = 0;
     juce::Image gifImage;
     int currentOutputIndex, nextOutputIndex, grainSize, flux, spread, currentGrainCounter, outputChannel, globalSampleRate, globalNumSamples, globalReleaseTime,attackBlocks,attackBlockCounter;
     float envelope;
     float envelopeVal,envelopeIncrement;
-    bool attackRampGateOn;
+    bool attackRampGateOn, shouldPaint;
     double attack;
     
     //I'm so serious I tried EVERYTHING and this was the only way
@@ -61,8 +63,6 @@ private:
     enum TransportState
     {
         Stopped,
-        Starting,
-        Stopping,
         Playing,
         Paused
     };
