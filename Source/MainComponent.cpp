@@ -1,7 +1,6 @@
 #include "MainComponent.h"
 MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), state(Stopped), openB("Open"), playB("Play"), stopB("Stop"), pauseB("Pause")/*, grainSizeSlider("Grain Size"), fluxSlider("Flux")*/
 {
-    
     //Sliders & their labels prep
     mAttackSlider.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
     mGrainSizeSlider.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
@@ -43,6 +42,9 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     mSpreadLabel.setFont(10.0f);
     mSpreadLabel.setJustificationType(Justification::centredTop);
     mSpreadLabel.attachToComponent(&mSpreadSlider, false);
+    noticeAboutOutputs.setFont(10.0f);
+    noticeAboutOutputs.setText ("NOTE: Always route outputs starting from 1+2 sequentially upwards. If you must use a non-standard subset of output channels #s, do this by rewiring in an external controller such as Focusrite Control.",NotificationType::dontSendNotification);
+    
     mAttackSlider.addListener(this);
     mGrainSizeSlider.addListener(this);
     mFluxSlider.addListener(this);
@@ -55,17 +57,18 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     addAndMakeVisible(mGrainSizeLabel);
     addAndMakeVisible(mFluxLabel);
     addAndMakeVisible(mSpreadLabel);
-
-
-    
-    
-    otherDeviceManager.initialise(2, 2, nullptr, true);
-        audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 2, 0, 2, true, true, true, true));
+    addAndMakeVisible(noticeAboutOutputs);
+    attackBlocks = 0;
+    otherDeviceManager.initialise(8, 8, nullptr, true);
+        audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 8, 0, 8, true, true, true, true));
         addAndMakeVisible(audioSettings.get());
-     grainSize = 2;
-     flux = 100;
-     currentGrainCounter = 30;
-     outputChannel = 0;
+    attack = 0.1;
+    grainSize = 5;
+    flux = 0;
+    spread = 50;
+    currentGrainCounter = grainSize;
+    outputChannel = 0;
+
     //I'm so serious I tried EVERYTHING and this was the only way
     backgroundGifFrames[16];
     backgroundGifFrames[0] = juce::ImageFileFormat::loadFrom(BinaryData::frame_000_delay0_08s_gif, BinaryData::frame_000_delay0_08s_gifSize);
@@ -260,20 +263,17 @@ void MainComponent::changeListenerCallback (ChangeBroadcaster *source)
 }
 void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
-    DBG("attack: " << attack);
-    DBG("grainSize: " << grainSize);
-    DBG("flux: " << flux);
-    DBG("spread: " << spread);
-    DBG("currentGrainCounter: " << currentGrainCounter);
+   // DBG("attack: " << attack);
+   // DBG("grainSize: " << grainSize);
+   // DBG("flux: " << flux);
+   // DBG("spread: " << spread);
+   // DBG("currentGrainCounter: " << currentGrainCounter);
     //what about cases where you have >2 outs but they're all above output 1 & 2 and you want to skip those?
     bufferToFill.clearActiveBufferRegion();
     // Get the number of output channels
     int numChannels = bufferToFill.buffer->getNumChannels();
-    // Choose a random output channel index
-    //randomOutputIndex = 1;
     
     //if -> grain finished - time to set a new grain
-    
     bool isLastAudioBlockInGrain = (currentGrainCounter == 1);
     bool isFirstAudioBlockInGrain = false;
     if (currentGrainCounter == 0){
@@ -286,7 +286,67 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
         }
         int newIndividualGrainSize = grainSize + fluxVal;
         currentGrainCounter = newIndividualGrainSize;
-        outputChannel = randomGenerator.nextInt(numChannels);
+        //Weighted distribution (based on spread) outputChannel selection algorithm;
+        // spread = 0: always chooses current channel
+        // ||
+        // spread dictates probability spread from current output channel;
+        // the closer a channel is to the current channel, the more likely it will be selected
+        //
+        // ||
+        // spread = 100: even distribution of probabilities for all channels
+        
+        // Create a vector to store the channel indices
+            std::vector<int> usedChannels;
+        // Iterate through the channels and check if they are used
+        for (int channel = 0; channel < numChannels; ++channel)
+        {
+            if (bufferToFill.buffer->getWritePointer(channel) != nullptr)
+            {
+                // This channel is used, add its index to the vector
+                usedChannels.push_back(channel);
+            }
+        }
+        // Now, 'usedChannels' contains the indices of the channels that are used in the buffer
+        for (int channelIndex : usedChannels)
+        {
+            DBG("Channel " << channelIndex + 1 << " is used.");
+        }
+        int currentChannel = outputChannel;
+        // Calculate the probability distribution
+        std::vector<float> probabilities;
+        float spreadFactor = static_cast<float>(100 - spread) / usedChannels.size();
+
+        for (int i = 0; i < usedChannels.size(); ++i)
+        {
+            float distance = std::abs(usedChannels[i] - currentChannel);
+            float probability = 1.0f / (1.0f + spreadFactor * distance);
+            probabilities.push_back(probability);
+        }
+
+        // Normalize probabilities to ensure they sum up to 1
+        float sum = std::accumulate(probabilities.begin(), probabilities.end(), 0.0f);
+        for (float& probability : probabilities)
+        {
+            probability /= sum;
+        }
+
+        // Select the next channel based on the probability distribution
+        float randomValue = randomGenerator.nextFloat();
+        float cumulativeProbability = 0.0f;
+        int nextChannel = -1;
+
+        for (int i = 0; i < probabilities.size(); ++i)
+        {
+            cumulativeProbability += probabilities[i];
+            if (randomValue <= cumulativeProbability)
+            {
+                nextChannel = usedChannels[i];
+                break;
+            }
+        }
+        outputChannel = nextChannel;
+        
+        DBG("new outputChannel: " << outputChannel);
         //apply envelope to new grain
         isFirstAudioBlockInGrain = true;
         //updateEnvelope();
@@ -295,8 +355,8 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
         currentGrainCounter--;
     }
     
-    DBG("bufferToFill.numSamples: " << bufferToFill.numSamples);
-    DBG("vs globalNumSamples: " << globalNumSamples);
+   // DBG("bufferToFill.numSamples: " << bufferToFill.numSamples);
+   // DBG("vs globalNumSamples: " << globalNumSamples);
     
     
     AudioSampleBuffer outputBuffer(bufferToFill.buffer->getArrayOfWritePointers() + outputChannel, 1, globalNumSamples);
@@ -309,8 +369,26 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
     if (isLastAudioBlockInGrain){
         outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 1, 0);
     }
-    if (isFirstAudioBlockInGrain){
-        outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 0, 1);
+    else if (isFirstAudioBlockInGrain){
+        attackBlockCounter = 0;
+        //outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 0, 1);
+        int attackSamples = static_cast<int>(attack * globalSampleRate);
+
+        // Calculate the number of blocks needed, rounding down
+        attackBlocks = std::floor(static_cast<double>(attackSamples) / globalNumSamples);
+
+        envelopeIncrement = (1/attackBlocks);
+        outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), 0, envelopeIncrement);
+        attackRampGateOn = true;
+    }
+    else if (attackRampGateOn){
+        if (attackBlockCounter < attackBlocks){
+            outputBuffer.applyGainRamp(0, outputBuffer.getNumSamples(), (double)(attackBlockCounter /attackBlocks), (double)(attackBlockCounter+1) / attackBlocks);
+            attackBlockCounter ++;
+        }
+        else{
+            attackRampGateOn = false;
+        }
     }
     
      //mute the other output channels
@@ -319,7 +397,9 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
          if (i != outputChannel)
              bufferToFill.buffer->clear(i, bufferToFill.startSample, bufferToFill.numSamples);
      }
-}/*
+}
+/*
+  
 void MainComponent::applyAttackEnvelope()
 {
     float attackTime = 0.1f;  // Adjust this as needed
@@ -414,6 +494,7 @@ void MainComponent::resized()
     mFluxSlider.setBounds(getWidth()/2 + (getWidth()/10+20) * 2, 220, getWidth()/10, getWidth()/10);
     mSpreadSlider.setBounds(getWidth()/2  + (getWidth()/10+20) * 3 , 220, getWidth()/10, getWidth()/10);
     
+    noticeAboutOutputs.setBounds(20, getHeight()-120, getWidth()/3, 100);
     /*
     mAttackLabel.setBounds(getWidth()/2 + getWidth()/20, 180, getWidth()/10, getWidth()/10);
     mGrainSizeLabel.setBounds(getWidth()/2 + getWidth()/10 + 20 + getWidth()/20, 180, getWidth()/10, getWidth()/10);

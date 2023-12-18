@@ -30,8 +30,10 @@ private:
     std::unique_ptr <AudioDeviceSelectorComponent> audioSettings;
     int64 lastPlayPosition = 0;
     juce::Image gifImage;
-    int currentOutputIndex, nextOutputIndex, grainSize, flux, spread, currentGrainCounter, outputChannel, globalSampleRate, globalNumSamples, globalReleaseTime;
+    int currentOutputIndex, nextOutputIndex, grainSize, flux, spread, currentGrainCounter, outputChannel, globalSampleRate, globalNumSamples, globalReleaseTime,attackBlocks,attackBlockCounter;
     float envelope;
+    float envelopeVal,envelopeIncrement;
+    bool attackRampGateOn;
     double attack;
     
     //I'm so serious I tried EVERYTHING and this was the only way
@@ -54,7 +56,7 @@ private:
     juce::Image backgroundGifFrame15;
     
     Slider mAttackSlider, mGrainSizeSlider, mFluxSlider, mSpreadSlider;
-    Label mAttackLabel, mGrainSizeLabel, mFluxLabel, mSpreadLabel;
+    Label mAttackLabel, mGrainSizeLabel, mFluxLabel, mSpreadLabel, noticeAboutOutputs;
     int currentAnimationFrame = 0;
     enum TransportState
     {
@@ -76,6 +78,7 @@ private:
     void changeListenerCallback (ChangeBroadcaster *source) override;
     // Function to update envelope during transitions
     void updateEnvelope();
+    int convertSecondsToBlocks();
     Random randomGenerator;
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
