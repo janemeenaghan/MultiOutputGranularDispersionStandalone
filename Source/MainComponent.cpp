@@ -1,6 +1,7 @@
 #include "MainComponent.h"
 MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), state(Stopped), openB("Open"), playB("Play"), stopB("Stop"), pauseB("Pause")/*, grainSizeSlider("Grain Size"), fluxSlider("Flux")*/
 {
+    //SORRY that this is a monster method but its much safer to do it here than run into weird inheritance problems trying to refactor into smaller methods.
     //Sliders & their labels prep
     mAttackSlider.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
     mGrainSizeSlider.setSliderStyle (Slider::SliderStyle::RotaryVerticalDrag);
@@ -27,7 +28,7 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     mGrainSizeSlider.setColour(Slider::ColourIds::thumbColourId,Colours::red);
     mFluxSlider.setColour(Slider::ColourIds::thumbColourId,Colours::red);
     mSpreadSlider.setColour(Slider::ColourIds::thumbColourId,Colours::red);
-    mAttackLabel.setText ("Attack (ms)",NotificationType::dontSendNotification);
+    mAttackLabel.setText ("Attack (s)",NotificationType::dontSendNotification);
     mGrainSizeLabel.setText ("Grain size",NotificationType::dontSendNotification);
     mFluxLabel.setText ("Flux",NotificationType::dontSendNotification);
     mSpreadLabel.setText ("Spread (%)",NotificationType::dontSendNotification);
@@ -59,7 +60,6 @@ MainComponent::MainComponent() : juce::AudioAppComponent(otherDeviceManager), st
     addAndMakeVisible(mFluxLabel);
     addAndMakeVisible(mSpreadLabel);
     addAndMakeVisible(noticeAboutOutputs);
-    
     attackBlocks = 0;
     otherDeviceManager.initialise(8, 8, nullptr, true);
         audioSettings.reset(new AudioDeviceSelectorComponent(otherDeviceManager, 0, 8, 0, 8, true, true, true, true));
@@ -486,7 +486,6 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
             downmixChannel[sample] += sourceChannel[sample];
         }
     }
-
     // Find the maximum absolute value in the downmix buffer
     float maxAbsValue = 0.0f;
     for (int sample = 0; sample < globalNumSamples; ++sample)
@@ -530,7 +529,6 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
             attackRampGateOn = false;
         }
     }
-    
      //mute the other output channels
      for (int i = 0; i < numChannels; ++i)
      {
@@ -538,16 +536,13 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
              bufferToFill.buffer->clear(i, bufferToFill.startSample, bufferToFill.numSamples);
      }
 }
-void MainComponent::releaseResources()
-{
-}
-//==============================================================================
+void MainComponent::releaseResources(){}
 void MainComponent::paint (Graphics& g)
 {
     g.fillAll (Colours::black);
     g.drawImage (backgroundGifFrames[currentAnimationFrame], getLocalBounds().toFloat());
-    
-    //handle draw waveform and playbackLine
+
+    //Draw waveform and playbackLine
     if (shouldPaint){
         //waveform
         g.setColour(Colours::white);
@@ -579,7 +574,6 @@ void MainComponent::paint (Graphics& g)
         playbackLine.lineTo(playbackLineX,getHeight()/4-getHeight()/5);
         g.strokePath(playbackLine, PathStrokeType(2));
     }
-    
 }
 void MainComponent::sliderValueChanged(Slider* slider){
     if (slider == &mAttackSlider){
