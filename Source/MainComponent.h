@@ -1,22 +1,10 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-//==============================================================================
-/*
-    This component lives inside our window, and this is where you should put all
-    your controls and content.
-*/
+
 class MainComponent   : public AudioAppComponent,
-                       // public Slider::Listener,
+                        public Slider::Listener,
                         public ChangeListener,
                         public juce::Timer
 
@@ -35,12 +23,18 @@ public:
     void paint (Graphics& g) override;
     void resized() override;
     void timerCallback() override;
+    void sliderValueChanged (Slider* slider) override;
+    
 private:
     AudioDeviceManager otherDeviceManager;
     std::unique_ptr <AudioDeviceSelectorComponent> audioSettings;
     int64 lastPlayPosition = 0;
     juce::Image gifImage;
-    int grainSize,flux;
+    int currentOutputIndex, nextOutputIndex, grainSize, flux, spread, currentGrainCounter, outputChannel, globalSampleRate, globalNumSamples, globalReleaseTime,attackBlocks,attackBlockCounter;
+    float envelope;
+    float envelopeVal,envelopeIncrement;
+    bool attackRampGateOn;
+    double attack;
     
     //I'm so serious I tried EVERYTHING and this was the only way
     juce::Image backgroundGifFrames[16];
@@ -61,6 +55,8 @@ private:
     juce::Image backgroundGifFrame14;
     juce::Image backgroundGifFrame15;
     
+    Slider mAttackSlider, mGrainSizeSlider, mFluxSlider, mSpreadSlider;
+    Label mAttackLabel, mGrainSizeLabel, mFluxLabel, mSpreadLabel, noticeAboutOutputs;
     int currentAnimationFrame = 0;
     enum TransportState
     {
@@ -80,11 +76,9 @@ private:
     void pauseButtonClicked();
     void transportStateChanged(TransportState newState);
     void changeListenerCallback (ChangeBroadcaster *source) override;
-    //void sliderValueChanged(Slider* slider) override;
     // Function to update envelope during transitions
     void updateEnvelope();
-    int currentOutputIndex, nextOutputIndex, globalGrainSize, globalFlux, globalCurrentGrainCounter, globalOutputChannel, globalSampleRate, globalNumSamples, globalAttackTime, globalReleaseTime;
-    float envelope;
+    int convertSecondsToBlocks();
     Random randomGenerator;
     AudioFormatManager formatManager;
     std::unique_ptr<AudioFormatReaderSource> readerSource;
