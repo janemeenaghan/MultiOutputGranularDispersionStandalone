@@ -19,7 +19,10 @@ Spread: probability distribution curve for randomize selection of output speaker
 Below are some demonstrations in stereo. While the effect is more striking in multi-channel setups, this gives a sense of the tool in action.
 https://github.com/janemeenaghan/MultiOutputGranularDispersionStandalone/blob/0d9018d2f10474c64deb8ecf9c85d9c965eeba40/Swarm%20Stereo%20Demo%201.mp4
 https://github.com/janemeenaghan/MultiOutputGranularDispersionStandalone/blob/0d9018d2f10474c64deb8ecf9c85d9c965eeba40/Swarm%20Stereo%20Demo%202.mov
+<video src="https://github.com/janemeenaghan/MultiOutputGranularDispersionStandalone/releases/download/DemoVidsAttempt2/Swarm.Stereo.Demo.1.mp4" controls width="600"></video>
 
+
+<video src="https://github.com/janemeenaghan/MultiOutputGranularDispersionStandalone/releases/latest/download/Swarm.Stereo.Demo.1.mp4" controls width="600"></video>
 
 
 
