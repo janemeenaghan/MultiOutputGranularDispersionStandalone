@@ -18,8 +18,11 @@ Flux: degree of random additive variation to grain size (in audio blocks).
 Spread: probability distribution curve for randomize selection of output speaker for each new grain. Closer to 0 -> successive grains more likely to stay on the current speaker or if not then adjacent speakers. Closer to 100 -> closer to evenly distributed probability.
 
 Below is a demonstration in stereo. While the effect is more striking in multi-channel setups, this gives a sense of the tool in action.
+
 https://github.com/user-attachments/assets/6e7c5513-484b-4dd3-ba80-cdb30ddae746
+
 And here is a demonstration on four amps (hence the sound is so harsh, apologies, I didn't have speakers around), to give more of a sense for the spatialization with several outputs across a room:
+
 https://github.com/user-attachments/assets/d15999bd-6f47-462e-9a18-a7838b37713c
 
 
