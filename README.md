@@ -23,8 +23,6 @@ https://github.com/user-attachments/assets/6e7c5513-484b-4dd3-ba80-cdb30ddae746
 
 And here is a demonstration on four amps (hence the sound is so harsh, apologies, I didn't have speakers around), to give more of a sense for the spatialization with several outputs across a room:
 
-https://github.com/user-attachments/assets/d15999bd-6f47-462e-9a18-a7838b37713c
-
 
 https://github.com/user-attachments/assets/e60056f8-6374-4049-96f8-b752f613c516
 
